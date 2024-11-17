@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,8 +9,10 @@
     <br/>
     <form>
         <label>Filepath</label>
-        <input/>
-        <button type="submit">Call API</button>
+        <input name="path" value="@Model.Path"/> 
+        <button type="submit" asp-action="GetFact" >Call API</button>
     </form>
+    <br/>
+    <h3>@Model.Message</h3>
     
 </div>
