@@ -1,8 +1,8 @@
 namespace CatFactGetter.Services;
 
-public class FileService(string path) : IFileService
+public class FileService : IFileService
 {
-    public void AddFactLine(string line)
+    public void AddFactLine(string path, string line)
     {
         try
         {

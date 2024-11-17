@@ -9,19 +9,14 @@ namespace CatFactGetter.Tests.Services;
 [TestSubject(typeof(FileService))]
 public class FileServiceTest
 {
-    private readonly FileService _fileService;
+    private readonly FileService _fileService = new();
     private readonly string _path = Path.GetTempFileName();
 
-    public FileServiceTest()
-    {
-        _fileService = new FileService(_path);
-    }
-    
     [Fact]
     public void AppendLineCreatesFile()
     {
         //act
-        _fileService.AddFactLine("abc");
+        _fileService.AddFactLine(_path,"abc");
         
         //assert
         Assert.True(File.Exists(_path));
@@ -35,8 +30,8 @@ public class FileServiceTest
         const string line1 = "line1";
         
         //act
-        _fileService.AddFactLine(line);
-        _fileService.AddFactLine(line1);
+        _fileService.AddFactLine(_path,line);
+        _fileService.AddFactLine(_path,line1);
         string readLine;
         string readLine1;
         string readLine2;
@@ -56,11 +51,8 @@ public class FileServiceTest
     [Fact]
     public void AppendLineThrowsIoExceptionIfPathIsInvalid()
     {
-        //arrange
-        var invalidPathFileService = new FileService("C:\\invalid_path<name>.txt");
-        
         //act
-        void Act() => invalidPathFileService.AddFactLine("abc");
+        void Act() => _fileService.AddFactLine("C:\\invalid_path<name>.txt","abc");
 
         //assert
         Assert.Throws<IOException>(Act);
